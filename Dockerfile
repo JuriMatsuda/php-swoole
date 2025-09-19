@@ -20,6 +20,11 @@ ENV PARALLEL_VERSION "v1.1.4"
 ENV PHP_INI_PATH "/usr/local/lib/php.ini"
 
 WORKDIR tmp
+
+# centos7のサポートが終了しているため、リポジトリを変更
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
+        sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+
 RUN yum update -y && \
     yum install -y epel-release
 
